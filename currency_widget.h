@@ -22,13 +22,14 @@ public:
 
     const QUrl coin_url_p1;
     const QUrl coin_url_p2;
-    void set_axis_range(const int min, const int max);
+
     void set_title(QString title);
 private:
     Ui::currency_widget *ui;
     QtCharts::QChartView *m_charview;
     QtCharts::QChart *m_chart;
     QtCharts::QLineSeries* series;
+    int m_max_series{};
 
 };
 

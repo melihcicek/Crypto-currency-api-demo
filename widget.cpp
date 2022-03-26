@@ -59,7 +59,6 @@ void Widget::dataReadFinished()
         //Turn the data into a json document
         QJsonObject object;
         QVariantMap map;
-        double max_of_series = 0.0;
         auto doc = QJsonDocument::fromJson(*m_data_buffer);
         auto json_obj = doc.object();
 
@@ -71,11 +70,8 @@ void Widget::dataReadFinished()
             map = object.toVariantMap();
             double price_usd = map["priceUsd"].toDouble();
             m_currency_widget->update_series(i, price_usd);
-
-            if(price_usd > max_of_series)
-                max_of_series = price_usd;
         }
-        m_currency_widget->set_axis_range(0, max_of_series + 2);
+
     }
 
     m_data_buffer->clear();

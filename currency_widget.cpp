@@ -40,18 +40,18 @@ currency_widget::~currency_widget()
 
 void currency_widget::update_series(int idx, int val)
 {
+    if(val > m_max_series)
+        m_max_series = val;
+
     series->append(idx, val);
+
+    m_chart->axes(Qt::Vertical).first()->setRange(0, m_max_series);
 }
 
 void currency_widget::clear()
 {
+    m_max_series = 0;
     series->clear();
-}
-
-void currency_widget::set_axis_range(const int min, const int max)
-{
-    m_chart->axes(Qt::Vertical).first()->setRange(min, max);
-
 }
 
 void currency_widget::set_title(QString title)
