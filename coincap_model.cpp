@@ -48,13 +48,15 @@ QVariant coincap_model::data(const QModelIndex &index, int role) const
 
         const coin& r = m_coin_list[index.row()];
 
-        switch(index.column())
+        column_name column = static_cast<column_name>(index.column());
+
+        switch(column)
         {
-        case 0: return r.id();
-        case 1: return r.symbol();
-        case 2: return r.name();
-        case 3: return r.price_usd();
-        case 4: return r.change_percent24Hr();
+        case column_name::id: return r.id();
+        case column_name::symbol: return r.symbol();
+        case column_name::name: return r.name();
+        case column_name::price_usd: return r.price_usd();
+        case column_name::change: return r.change_percent24Hr();
         }
     }
 
