@@ -9,16 +9,20 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    btcwidget.cpp \
+    coin.cpp \
+    coincap_model.cpp \
+    currency_widget.cpp \
     main.cpp \
     widget.cpp
 
 HEADERS += \
-    btcwidget.h \
+    coin.h \
+    coincap_model.h \
+    currency_widget.h \
     widget.h
 
 FORMS += \
-    btcwidget.ui \
+    currency_widget.ui \
     widget.ui
 
 # Default rules for deployment.

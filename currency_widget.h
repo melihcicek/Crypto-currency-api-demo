@@ -7,23 +7,29 @@
 
 
 namespace Ui {
-class BtcWidget;
+class currency_widget;
 }
 
-class BtcWidget : public QWidget
+class currency_widget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit BtcWidget(QWidget *parent = nullptr);
-    ~BtcWidget();
+    explicit currency_widget(QWidget *parent = nullptr);
+    ~currency_widget();
     void update_series(int idx, int val);
     void clear();
+
+    const QUrl coin_url_p1;
+    const QUrl coin_url_p2;
+    void set_axis_range(const int min, const int max);
+    void set_title(QString title);
 private:
-    Ui::BtcWidget *ui;
+    Ui::currency_widget *ui;
     QtCharts::QChartView *m_charview;
     QtCharts::QChart *m_chart;
     QtCharts::QLineSeries* series;
+
 };
 
 #endif // BTCWIDGET_H

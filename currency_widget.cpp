@@ -1,13 +1,14 @@
-#include "btcwidget.h"
+#include "currency_widget.h"
 #include "ui_btcwidget.h"
 #include <QVBoxLayout>
 #include<QDebug>
 
 using namespace QtCharts;
 
-BtcWidget::BtcWidget(QWidget *parent) :
+currency_widget::currency_widget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::BtcWidget)
+    ui(new Ui::currency_widget), coin_url_p1 ("https://api.coincap.io/v2/assets/"),
+    coin_url_p2 ("/history?interval=d1")
 {
     ui->setupUi(this);
 
@@ -32,18 +33,28 @@ BtcWidget::BtcWidget(QWidget *parent) :
     setLayout(layout);
 }
 
-BtcWidget::~BtcWidget()
+currency_widget::~currency_widget()
 {
     delete ui;
 }
 
-void BtcWidget::update_series(int idx, int val)
+void currency_widget::update_series(int idx, int val)
 {
     series->append(idx, val);
-    //qDebug()<<QString::number(val);
 }
 
-void BtcWidget::clear()
+void currency_widget::clear()
 {
     series->clear();
+}
+
+void currency_widget::set_axis_range(const int min, const int max)
+{
+    m_chart->axes(Qt::Vertical).first()->setRange(min, max);
+
+}
+
+void currency_widget::set_title(QString title)
+{
+    m_chart->setTitle(title);
 }
