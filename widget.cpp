@@ -68,8 +68,7 @@ void Widget::dataReadFinished()
         for ( int i = 0; i < array.size(); i++) {
             object = array.at(i).toObject();
             map = object.toVariantMap();
-            double price_usd = map["priceUsd"].toDouble();
-            m_currency_widget->update_series(i, price_usd);
+            m_currency_widget->update_series(i, map["priceUsd"].toDouble());
         }
 
     }
