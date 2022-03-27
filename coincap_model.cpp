@@ -3,6 +3,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QDebug>
+#include <QColor>
 
 coincap_model::coincap_model(QObject *parent) : QAbstractTableModel(parent),
     m_net_manager{ new QNetworkAccessManager(this)}, m_net_reply {nullptr}, m_data_buffer{new QByteArray}
@@ -44,11 +45,11 @@ QVariant coincap_model::data(const QModelIndex &index, int role) const
     if (index.row() < 0 || index.row() >= m_coin_list.size())
         return QVariant();
 
+    const coin& r = m_coin_list[index.row()];
+
+    column_name column = static_cast<column_name>(index.column());
+
     if(role == Qt::DisplayRole || role == Qt::EditRole){
-
-        const coin& r = m_coin_list[index.row()];
-
-        column_name column = static_cast<column_name>(index.column());
 
         switch(column)
         {
@@ -58,6 +59,16 @@ QVariant coincap_model::data(const QModelIndex &index, int role) const
         case column_name::price_usd: return r.price_usd();
         case column_name::change: return r.change_percent24Hr();
         }
+    }
+    else if(role == Qt::ForegroundRole)
+    {
+        if(column == column_name::change){
+            if(r.change_percent24Hr() < 0)
+                return QVariant::fromValue(QColor(Qt::red));
+            else
+                return QVariant::fromValue(QColor(Qt::darkGreen));
+        }
+
     }
 
     return  QVariant();
@@ -77,7 +88,7 @@ QVariant coincap_model::headerData(int section, Qt::Orientation orientation, int
         case column_name::symbol : return QString("Symbol");
         case column_name::name : return QString("Name");
         case column_name::price_usd : return QString("Price Usd");
-        case column_name::change : return QString("Change");
+        case column_name::change : return QString("Change %");
         }
     }
     // vertical rows
