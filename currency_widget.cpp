@@ -40,12 +40,12 @@ currency_widget::~currency_widget()
 
 void currency_widget::update_series(int idx, int val)
 {
-    if(val > m_max_series)
+    if(val > m_max_series){
         m_max_series = val;
+        m_chart->axes(Qt::Vertical).first()->setRange(0, m_max_series);
+    }
 
     series->append(idx, val);
-
-    m_chart->axes(Qt::Vertical).first()->setRange(0, m_max_series);
 }
 
 void currency_widget::clear()
